@@ -1,0 +1,7 @@
+.venv
+model
+resources
+server
+
+
+__pycache__
