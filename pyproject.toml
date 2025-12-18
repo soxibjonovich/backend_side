@@ -1,10 +1,9 @@
 [project]
 name = "server-side"
 version = "0.1.0"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.122.0",
-    "librosa>=0.11.0",
     "python-multipart>=0.0.20",
     "ruff>=0.14.6",
     "torch>=2.9.1",

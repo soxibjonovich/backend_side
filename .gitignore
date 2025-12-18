@@ -2,6 +2,8 @@
 model
 resources
 server
+.idea
+.ruff_cache
 
-
+.DS_Store
 __pycache__

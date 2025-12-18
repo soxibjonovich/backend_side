@@ -20,9 +20,9 @@ async def lifespan(app: FastAPI):
     print("🚀 Loading Whisper model...")
     transcription_service.load_model()
     print("✅ Model loaded and ready!")
-    
+
     yield
-    
+
     # Shutdown
     print("🛑 Cleaning up model resources...")
     transcription_service.cleanup_model()
@@ -33,13 +33,13 @@ app = FastAPI(
     title="Uzbek Whisper API",
     version="2.0.0",
     description="Whisper-based STT API with batch and real-time transcription",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 
 # Include routers
-app.include_router(stt_router)         # Batch API: /api/*
-app.include_router(websocket_router)   # Live STT: /live/*
+app.include_router(stt_router)  # Batch API: /api/*
+app.include_router(websocket_router)  # Live STT: /live/*
 
 
 @app.get("/docs", include_in_schema=False)
@@ -48,7 +48,7 @@ async def custom_swagger_ui():
     return get_swagger_ui_html(
         openapi_url="/openapi.json",
         title="Uzbek Whisper API",
-        swagger_favicon_url="/favicon.ico"
+        swagger_favicon_url="/favicon.ico",
     )
 
 
@@ -62,7 +62,7 @@ async def favicon():
 async def root():
     """Root endpoint with API information"""
     model_status = transcription_service.get_model_status()
-    
+
     return {
         "service": "Uzbek Whisper API",
         "version": "2.0.0",
@@ -74,24 +74,18 @@ async def root():
             "live_transcription": "/live/transcribe",
             "test_client": "/live/test-client",
             "api_docs": "/docs",
-            "health": "/api/health"
-        }
+            "health": "/api/health",
+        },
     }
 
 
 @app.get("/status", response_model=APIStatusResponse)
 async def status():
     """API status endpoint"""
-    return APIStatusResponse(
-        status=Config.STATUS.value
-    )
+    return APIStatusResponse(status=Config.STATUS.value)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        app, 
-        host="0.0.0.0", 
-        port=8000,
-        log_level="info"
-    )
+
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
